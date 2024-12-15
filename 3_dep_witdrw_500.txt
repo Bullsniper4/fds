@@ -1,0 +1,38 @@
+# Initialize bank balance
+bank_balance = 0
+
+# Function to deposit money
+def deposit(amt):
+    global bank_balance
+    bank_balance += amt
+
+# Function to withdraw money
+def withdraw(amt):
+    global bank_balance
+    if bank_balance >= amt:
+        bank_balance -= amt
+    else:
+        print("Not Enough Bank Balance for withdrawal of", amt)
+
+# Input transaction log
+trans_log = input("Enter the Transaction log (format: 'D 100, W 200'): ")
+
+# Split the transaction log into individual entries
+entry_list = trans_log.split(", ")
+
+# Process each entry in the transaction log
+for entry in entry_list:
+    # Split the entry into operation and amount
+    op, amt = entry.split(" ")
+    amt = int(amt)
+
+    # Perform the operation
+    if op == "D":
+        deposit(amt)
+    elif op == "W":
+        withdraw(amt)
+    else:
+        print(f"Invalid operation '{op}' in transaction log.")
+
+# Print the final bank balance
+print("Current Bank Balance =", bank_balance)

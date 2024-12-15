@@ -1,0 +1,52 @@
+"""Write a python program to store second year percentage of student in array. Write
+function for sorting array of floating point numbers in ascending order using
+a) Insertion sort
+b) Shell sort display top five scores."""
+
+
+def insertion_sort(array):
+    for i in range(1, len(array)):
+        key = array[i]
+        j = i - 1
+        while j >= 0 and key < array[j]:
+            array[j + 1] = array[j]
+            j -= 1
+        array[j + 1] = key
+
+def shell_sort(array):
+    n = len(array)
+    gap = n // 2
+    while gap > 0:
+        for i in range(gap, n):
+            temp = array[i]
+            j = i
+            while j >= gap and array[j - gap] > temp:
+                array[j] = array[j - gap]
+                j -= gap
+            array[j] = temp
+        gap //= 2
+
+def main():
+    while True:
+        # Input and sorting
+        n = int(input("Enter the number of students: "))
+        percentages = [float(input(f"Enter percentage of student {i+1}: ")) for i in range(n)]
+
+        choice = int(input("Choose sorting method (1. Insertion Sort, 2. Shell Sort): "))
+        if choice == 1:
+            insertion_sort(percentages)
+        elif choice == 2:
+            shell_sort(percentages)
+        else:
+            print("Invalid choice.")
+            return
+
+        # Display top five scores
+        print("Top five scores:", sorted(percentages, reverse=True)[:5])
+
+        # Ask if the user wants to continue (only once after sorting and displaying results)
+        continue_choice = input("Do you want to continue? (yes/no): ").strip().lower()
+        if continue_choice not in ['yes', 'y']:
+            break  # Exit the loop if the answer is not "yes" or "y"
+
+main()

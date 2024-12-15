@@ -1,0 +1,86 @@
+"""Write a Python program to store marks scored in subject “Fundamental of Data 
+Structure” by N students in the class. Write functions to compute following:
+a) The average score of class 
+b) Highest score and lowest score of class 
+c) Count of students who were absent for the test
+d) Display mark with highest frequency"""
+
+
+def average(marks):
+    total = 0
+    count = 0
+    for mark in marks:
+        if mark != -999:
+            total += mark
+            count += 1
+    if count > 0:
+         avg = total / count
+    else: 
+         avg = 0
+    print("Average marks:" , avg)
+    
+def Highest(marks):
+    max_marks = -999
+    for mark in marks:
+        if mark != -999 and mark > max_marks:
+            max_marks = mark
+    print("Highest Marks:" , max_marks)
+    
+def Lowest(marks):
+    min_marks = 999
+    for mark in marks:
+        if mark != -999 and mark < min_marks:
+              min_marks = mark
+    print("Lowest Marks:" , min_marks)
+    
+def absent(marks):
+    count = 0
+    for mark in marks:
+        if mark == -999:
+            count += 1
+    print("Absent Students:" , count)
+    
+def most_frequent(marks):
+    freq = {}
+    for mark in marks:
+        if mark != -999:
+            freq[mark] = freq.get(mark, 0) + 1
+            
+    most_freq = None
+    Highest_count = 0
+    for mark, count in freq.items():
+        if count > Highest_count:
+            most_freq = mark
+            Highest_count = count
+            
+    print("Most frequent marks:" , most_freq , "with frequency:" , Highest_count )  
+marks = []
+num_students = int(input("Enter total  number of students:"))   
+for i in range (num_students):
+    mark = int(input(f"Enter the marks of students {i + 1}:")) 
+    marks.append(mark)
+while True:    
+   print("\n1. Average marks") 
+   print("2. Highest marks")
+   print("3. Lowest marks")
+   print("4. Absent Student")
+   print("5. Most Frequent marks")
+   print("6. exit")
+   
+   choice = int(input("Enter your choice:"))
+   
+   if choice == 1:
+       average(marks)
+   elif choice == 2:
+       Highest(marks)
+   elif choice == 3:
+       Lowest(marks)
+   elif choice == 4:
+       absent(marks)
+   elif choice == 5:
+       most_frequent(marks)
+   elif choice == 6:
+       print("Thank You!")
+       break
+   else:
+     print("Invalid choice! Please try again.")

@@ -1,0 +1,85 @@
+# Function for Linear Search
+def linear_search(arr, key):
+    for i in range(len(arr)):
+        if arr[i] == key:
+            return i
+    return -1
+
+# Function for Sentinel Search
+def sentinel_search(arr, key):
+    n = len(arr)
+    last = arr[-1]
+    arr[-1] = key
+    i = 0
+
+    while arr[i] != key:
+        i += 1
+    
+    arr[-1] = last
+    if i < n - 1 or arr[-1] == key:
+        return i
+    return -1
+
+# Function for Binary Search
+def binary_search(arr, key):
+    arr.sort()  # Ensure the array is sorted
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == key:
+            return mid
+        elif arr[mid] < key:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+
+# Input: Roll numbers of students
+roll_numbers = []
+n = int(input("Enter the number of students who attended the training program: "))
+for i in range(n):
+    roll = int(input(f"Enter roll number of student {i + 1}: "))
+    roll_numbers.append(roll)
+
+# Menu-driven program
+while True:
+    print("\nSearch Options:")
+    print("1. Linear Search")
+    print("2. Sentinel Search")
+    print("3. Binary Search")
+    print("4. Exit")
+
+    choice = int(input("Enter your choice: "))
+    
+    if choice in [1, 2, 3]:
+        key = int(input("Enter the roll number to search: "))
+    
+    if choice == 1:
+        result = linear_search(roll_numbers, key)
+        if result != -1:
+            print(f"Roll number {key} found at position {result + 1}.")
+        else:
+            print(f"Roll number {key} not found.")
+    
+    elif choice == 2:
+        result = sentinel_search(roll_numbers, key)
+        if result != -1:
+            print(f"Roll number {key} found at position {result + 1}.")
+        else:
+            print(f"Roll number {key} not found.")
+    
+    elif choice == 3:
+        result = binary_search(roll_numbers, key)
+        if result != -1:
+            print(f"Roll number {key} found at position {result + 1} in sorted order.")
+        else:
+            print(f"Roll number {key} not found.")
+    
+    elif choice == 4:
+        print("Exiting the program. Thank you!")
+        break
+    
+    else:
+        print("Invalid choice! Please select a valid option.")

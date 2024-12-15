@@ -1,0 +1,83 @@
+"""Write a Python program for department library which has N books, wrilte functions for
+following:
+a) Delete the duplicate entries
+b) Display books in ascending order based on cost of books
+c) Count number of books with cost more than 500,
+d) Copy books in a new list which has cost less than 500"""
+
+def remove_duplicate_books(book_list):
+    # Remove duplicate books based on title
+    unique_books = []
+    seen_titles = set()
+    for book in book_list:
+        if book["title"] not in seen_titles:
+            unique_books.append(book)
+            seen_titles.add(book["title"])
+    return unique_books
+
+def display_books_sorted_by_cost(book_list):
+    # Sort books by cost (without lambda) and display them
+    for i in range(len(book_list)):
+        for j in range(i + 1, len(book_list)):
+            if book_list[i]["cost"] > book_list[j]["cost"]:
+                book_list[i], book_list[j] = book_list[j], book_list[i]
+
+    print("\nBooks sorted by cost:")
+    for book in book_list:
+        print(f"Title: {book['title']}, Cost: {book['cost']}")
+
+def count_books_costing_above_threshold(book_list, cost_threshold):
+    # Count books with cost greater than the threshold
+    count = 0
+    for book in book_list:
+        if book["cost"] > cost_threshold:
+            count += 1
+    print(f"\nNumber of books costing more than {cost_threshold}: {count}")
+    return count
+
+def copy_books_costing_below_threshold(book_list, cost_threshold):
+    # Copy books with cost less than the threshold
+    cheap_books = []
+    for book in book_list:
+        if book["cost"] < cost_threshold:
+            cheap_books.append(book)
+    print(f"\nBooks costing less than {cost_threshold} copied to a new list.")
+    return cheap_books
+
+def main():
+    book_collection = []
+    num_books = int(input("Enter the number of books: "))
+    for _ in range(num_books):
+        book_title = input("Enter the book title: ")
+        book_cost = float(input("Enter the book cost: "))
+        book_collection.append({"title": book_title, "cost": book_cost})
+
+    while True:
+        print("\nMenu:")
+        print("1. Remove duplicate entries")
+        print("2. Display books sorted by cost")
+        print("3. Count books costing more than 500")
+        print("4. Copy books costing less than 500 to a new list")
+        print("5. Exit")
+
+        user_choice = int(input("Enter your choice: "))
+        if user_choice == 1:
+            book_collection = remove_duplicate_books(book_collection)
+            print("\nDuplicate entries removed.")
+        elif user_choice == 2:
+            display_books_sorted_by_cost(book_collection)
+        elif user_choice == 3:
+            count_books_costing_above_threshold(book_collection, 500)
+        elif user_choice == 4:
+            cheap_books = copy_books_costing_below_threshold(book_collection, 500)
+            print("\nList of books costing less than 500:")
+            for book in cheap_books:
+                print(f"Title: {book['title']}, Cost: {book['cost']}")
+        elif user_choice == 5:
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()

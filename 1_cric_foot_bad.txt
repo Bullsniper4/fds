@@ -1,0 +1,78 @@
+"""In second year computer engineering class, group A student’s play cricket, group B  
+students play badminton and group C students play football. 
+Write a Python program using functions to compute following: -
+a) List of students who play both cricket and badminton 
+b) List of students who play either cricket or badminton but not both 
+c) Number of students who play neither cricket nor badminton
+d) Number of students who play cricket and football but not badminton.
+(Note- While realizing the group, duplicate entries should be avoided, Do not use SET built-in functions)"""
+
+
+
+def remove_duplicates(lst):
+    """Removes duplicates from a list without using set."""
+    res = []
+    for student in lst:
+        if student not in res:
+            res.append(student)
+    return res
+
+
+def intersection(l1, l2):
+    """Returns elements common to both lists."""
+    res = []
+    for student in l1:
+        if student in l2:
+            res.append(student)
+    return res
+
+
+def union(l1, l2):
+    """Returns all unique elements from both lists."""
+    res = l2.copy()
+    for student in l1:
+        if student not in res:
+            res.append(student)
+    return res
+
+
+def diff(l1, l2):
+    """Returns elements in l1 that are not in l2."""
+    res = []
+    for student in l1:
+        if student not in l2:
+            res.append(student)
+    return res
+
+
+# Define the groups
+a = remove_duplicates([1, 2, 3, 4, 5, 6, 7])  # Cricket players
+b = remove_duplicates([2, 3, 6, 7, 10])       # Badminton players
+c = remove_duplicates([2, 4, 6, 8, 10, 12])   # Football players
+
+# Create the universal set (students in all groups combined)
+universal_set = remove_duplicates(union(union(a, b), c))
+
+print("""In second year computer engineering class, group A students play cricket, 
+group B students play badminton, and group C students play football.""")
+
+print(f"A (Cricket) = {a}")
+print(f"B (Badminton) = {b}")
+print(f"C (Football) = {c}")
+
+# a) List of students who play both cricket and badminton
+print("a. Students who play both cricket and badminton:")
+print(intersection(a, b))  # [2, 3, 6, 7]
+
+# b) List of students who play either cricket or badminton but not both
+print("b. Students who play either cricket or badminton but not both:")
+print(diff(union(a, b), intersection(a, b)))  # [1, 4, 5, 10]
+
+# c) Number of students who play neither cricket nor badminton
+print("c. Number of students who play neither cricket nor badminton:")
+print(len(diff(universal_set, union(a, b))))  # 3 ([4, 8, 12])
+
+# d) Number of students who play cricket and football but not badminton
+print("d. Number of students who play cricket and football but not badminton:")
+print(len(diff(intersection(a, c), b)))  # 1 ([4])
+
